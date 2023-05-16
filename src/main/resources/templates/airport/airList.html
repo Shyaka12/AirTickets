@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="_layout" xmlns="http://www.w3.org/1999/html">
+<head>
+  <meta charset="UTF-8">
+  <title>List</title>
+</head>
+<body>
+<div layout:fragment="content">
+  <section class="wrapper">
+    <div class="row">
+      <section class="panel">
+
+        <div class="panel-body">
+          <div class="row">
+            <div class="col-lg-6">
+              <a href="/airportAdd"  class="btn btn-primary">
+                New Airport
+              </a>
+            </div>
+            <form th:action="@{/airports}">
+              <div class="col-lg-3">
+                <input type="text" name="keyword" class="form-control">
+              </div>
+              <div class="col-lg-3">
+                <input type="submit" value="Search" class="btn-success form-control">
+              </div>
+            </form>
+          </div>
+
+        </div>
+      </section>
+      <div class="col-lg-12">
+        <section class="panel">
+          <header class="panel-heading">
+            Airport Table
+          </header>
+
+          <table class="table table-striped table-advance table-hover">
+            <tbody>
+            <tr>
+              <th><i class="icon_profile"></i> <a th:href="@{'/airports/page/' + ${currentPage} + '/name?sortDir=' + ${reverseSortDir}}">Name</a></th>
+              <th><i class=""></i><a  th:href="@{'/airports/page/' + ${currentPage} + '/city?sortDir=' + ${reverseSortDir}}">City</a></th>
+              <th><i class=""></i><a  th:href="@{'/airports/page/' + ${currentPage} + '/country?sortDir=' + ${reverseSortDir}}">Country</a></th>
+              <th><i class="icon_cogs"></i>Action</th>
+            </tr>
+            <tr th:each="airport:${airports}">
+              <td th:text="${airport.name}"></td>
+              <td th:text="${airport.city}"></td>
+              <td th:text="${airport.country}"></td>
+              <td>
+                <div class="btn-group">
+                  <a class="btn btn-primary" th:href="@{'/airportDetail/' +${airport.id}}"><i class="icon_plus_alt2"></i></a>
+                  <a class="btn btn-success"
+                     th:href="@{'/airportEdit/' +${airport.id}}"><i class="icon_check_alt2"></i></a>
+                  <a class="btn btn-danger"
+                     onclick="return confirm('Are You sure delete')"
+                     th:href="@{'/airports/delete/' +${airport.id}}"><i class="icon_close_alt2"></i></a>
+                </div>
+              </td>
+            </tr>
+
+            </tbody>
+          </table>
+          <footer style="font-size: large" class="panel-footer">
+            <nav aria-label="Page navigation example">
+              Total Items [[${totalItems}]] : Page [[${currentPage}]] of [[${totalPages}]]
+
+              <ul class="pagination">
+                <li class="page-item">
+                  <a  class="page-link" th:if="${currentPage > 1}" th:href="@{/airports/page/1}">First</a>
+                  <span th:unless="${currentPage > 1}">First</span>
+                </li>
+
+                <li class="page-item">
+                  <a th:if="${currentPage > 1}" th:href="@{'/airports/page/' + ${currentPage - 1}}">Previous</a>
+                  <span th:unless="${currentPage > 1}">Previous</span>
+                </li>
+
+                <li class="page-item">
+                     <span th:each="i: ${#numbers.sequence(1, totalPages)}">
+                            <a th:href="@{'/airports/page/' + ${i}}">[[${i}]]</a>
+                      </span>
+                </li>
+
+                <li class="page-item">
+                  <a th:if="${currentPage < totalPages}" th:href="@{'/airports/page/' + ${currentPage + 1}}">Next</a>
+                  <span th:unless="${currentPage < totalPages}">Next</span>
+                </li>
+
+                <li class="page-item">
+                  <a th:if="${currentPage < totalPages}" th:href="@{'/airports/page/' + ${totalPages}}">Last</a>
+                  <span th:unless="${currentPage < totalPages}">Last</span>
+                </li>
+              </ul>
+            </nav>
+
+          </footer>
+        </section>
+      </div>
+    </div>
+  </section>
+</div>
+</body>
+</html>

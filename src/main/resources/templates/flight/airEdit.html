@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="_layout">
+<body>
+<div layout:fragment="content">
+
+    <section class="wrapper">
+        <header class="panel-heading">
+            Edit flight
+        </header>
+        <div class="row">
+            <form class="form-horizontal " th:action="@{'/flight/update/' +${flights.id}}" method="put">
+            <div class="col-lg-6">
+                <section class="panel">
+
+                    <div class="panel-body">
+
+                            <div class="form-group">
+                                <label class="control-label col-sm-4">Aircraft</label>
+                                <div class="col-sm-6">
+                                    <select class="form-control"  id="ddlCountryAdd" name="country_id">
+                                        <option>-SELECT-</option>
+                                        <option th:each="aircraft : ${aircrafts}"
+                                                th:value="${aircraft.id}"
+                                                th:selected="${aircraft.id}==${flight.countryid} ? True: False"
+                                                th:text="${aircraft.name}">
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-sm-4">DepartureTime</label>
+                                <div class="col-sm-6">
+                                    <input name="departureTime" th:value="${flight.departureTime}"class="form-control" size="16" type="text" >
+
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-sm-4">ArrivalTime</label>
+                                <div class="col-sm-6">
+                                    <div class="input-prepend">
+                                        <input name="arrivalTime" th:value="${flight.arrivalTime}" type="text" class=" form-control" />
+                                    </div>
+                                </div>
+                            </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-4">Status</label>
+                            <div class="col-sm-6">
+                                <div class="input-prepend">
+                                    <input name="status" th:value="${flight.status}" type="text" class=" form-control" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-4">Price</label>
+                            <div class="col-sm-6">
+                                <div class="input-prepend">
+                                    <input name="price" th:value="${flight.price}" type="text" class=" form-control" />
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </section>
+                <section class="panel">
+
+                    <div class="panel-body">
+                        <button type="submit"  class="btn btn-success">Save</button>
+                        <a href="/flights"  class="btn btn-warning">Exit</a>
+                    </div>
+                </section>
+            </div>
+            </form>
+        </div>
+    </section>
+</div>
+</body>
+</html>
